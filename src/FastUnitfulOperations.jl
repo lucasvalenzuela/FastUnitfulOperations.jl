@@ -1,8 +1,9 @@
 module FastUnitfulOperations
 
+using LinearAlgebra
 using Unitful
 
-export *ᵘ, uproduct, usort, usort!, usortperm, usortperm!
+export *ᵘ, uproduct, uproduct!, usort, usort!, usortperm, usortperm!
 
 """
     uproduct(a::AbstractArray{T1}, b::AbstractArray{T2}) where {T1 and/or T2 <:Quantity}
@@ -33,6 +34,38 @@ function uproduct(a::AbstractArray, b::AbstractArray{T2}) where {T2<:Quantity}
     return reinterpret(T2, c)
 end
 
+
+"""
+    uproduct!(c::AbstractArray, a::AbstractArray{T1}, b::AbstractArray{T2}) where {T1 and/or T2 <:Quantity}
+
+Fast in-place matrix multiplication for Unitful arrays.
+
+This method reinterprets the unitful arrays as arrays with the number's type to make use of
+optimized matrix multiplication for integers or floats.
+The method will throw an error if the array contains Unitful elements that do not have a fixed
+value or unit type.
+"""
+function uproduct!(c::AbstractArray{T1}, a::AbstractArray{T2}, b::AbstractArray{T3}) where {T1<:Quantity,T2<:Quantity,T3<:Quantity}
+    mul!(ustrip(c), ustrip(a), ustrip(b))
+    return c
+end
+
+function uproduct!(c::AbstractArray, a::AbstractArray{T2}, b::AbstractArray{T3}) where {T2<:Quantity,T3<:Quantity}
+    mul!(c, ustrip(a), ustrip(b))
+    return c
+end
+
+function uproduct!(c::AbstractArray{T1}, a::AbstractArray, b::AbstractArray{T3}) where {T1<:Quantity,T3<:Quantity}
+    mul!(ustrip(c), a, ustrip(b))
+    return c
+end
+
+function uproduct!(c::AbstractArray{T1}, a::AbstractArray{T2}, b::AbstractArray) where {T1<:Quantity,T2<:Quantity}
+    mul!(ustrip(c), ustrip(a), b)
+    return c
+end
+
+
 """
     uproduct(a, b)
     *ᵘ(a, b)
@@ -40,6 +73,13 @@ end
 Fallback to regular multiplication: `uproduct(a, b) = a * b`
 """
 uproduct(a, b) = a * b
+
+"""
+    uproduct!(c, a, b)
+
+Fallback to regular multiplication: `uproduct!(c, a, b) = mul!(c, a, b)`
+"""
+uproduct!(c, a, b) = mul!(c, a, b)
 
 *ᵘ = uproduct
 
