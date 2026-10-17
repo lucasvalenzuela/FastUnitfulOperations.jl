@@ -16,7 +16,7 @@ using Unitful
         @test uproduct(au, b) == a * b * u"m"
         @test uproduct(a, b) == a * b
 
-        @test au *ᵘ bu == a * b * u"m*s"
+        @test au*ᵘbu == a * b * u"m*s"
     end
 
     @testset "Sorting" begin
