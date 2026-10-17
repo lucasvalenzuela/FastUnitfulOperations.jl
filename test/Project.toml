@@ -11,7 +11,7 @@ Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 FastUnitfulOperations = {path = ".."}
 
 [compat]
-Aqua = "0.8"
+Aqua = "0.8.14"
 ExplicitImports = "1.15"
 JET = "0.12"
 SortingAlgorithms = "1.2"
