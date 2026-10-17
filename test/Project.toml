@@ -1,4 +1,19 @@
 [deps]
+Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
+ExplicitImports = "7d51a73a-1435-4ff3-83d9-f097790105c7"
+FastUnitfulOperations = "b031420d-871e-4e9c-8878-33bec386257e"
+JET = "c3a54625-cd67-489e-a8e7-0a5a0ff4e31b"
 SortingAlgorithms = "a2af1166-a08f-5f64-846c-94a0d3cef48c"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+
+[sources]
+FastUnitfulOperations = {path = ".."}
+
+[compat]
+Aqua = "0.8.14"
+ExplicitImports = "1.15"
+JET = "0.12"
+SortingAlgorithms = "1.2"
+Test = "1"
+Unitful = "1.29"

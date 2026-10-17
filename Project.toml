@@ -1,17 +1,16 @@
 name = "FastUnitfulOperations"
 uuid = "b031420d-871e-4e9c-8878-33bec386257e"
-authors = ["Lucas Valenzuela"]
 version = "0.1.2"
+authors = ["Lucas Valenzuela"]
+
+[workspace]
+projects = ["docs", "test"]
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
-julia = "1.6"
-
-[extras]
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
-
-[targets]
-test = ["Test"]
+LinearAlgebra = "1"
+Unitful = "1.29"
+julia = "1.12"

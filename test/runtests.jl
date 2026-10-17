@@ -1,10 +1,26 @@
 using FastUnitfulOperations
 using Test
+using Aqua
+using ExplicitImports
+using JET
 
 using SortingAlgorithms
 using Unitful
 
 @testset "FastUnitfulOperations.jl" begin
+    @testset "Code quality (Aqua.jl)" begin
+        Aqua.test_all(FastUnitfulOperations)
+    end
+    @testset "Imports (ExplicitImports.jl)" begin
+        @test check_no_stale_explicit_imports(FastUnitfulOperations) === nothing
+        @test check_no_self_qualified_accesses(FastUnitfulOperations) === nothing
+    end
+    if JET.JET_AVAILABLE
+        @testset "Code linting (JET.jl)" begin
+            JET.test_package(FastUnitfulOperations; target_modules=(FastUnitfulOperations,))
+        end
+    end
+
     @testset "Product" begin
         a = rand(200, 3)
         b = rand(3, 24)
@@ -16,7 +32,7 @@ using Unitful
         @test uproduct(au, b) == a * b * u"m"
         @test uproduct(a, b) == a * b
 
-        @test au *ᵘ bu == a * b * u"m*s"
+        @test au*ᵘbu == a * b * u"m*s"
     end
 
     @testset "Sorting" begin

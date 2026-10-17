@@ -6,19 +6,13 @@ DocMeta.setdocmeta!(FastUnitfulOperations, :DocTestSetup, :(using FastUnitfulOpe
 makedocs(;
     modules=[FastUnitfulOperations],
     authors="Lucas Valenzuela",
-    repo="https://github.com/lucasvalenzuela/FastUnitfulOperations.jl/blob/{commit}{path}#{line}",
     sitename="FastUnitfulOperations.jl",
     format=Documenter.HTML(;
-        prettyurls=get(ENV, "CI", "false") == "true",
         canonical="https://lucasvalenzuela.github.io/FastUnitfulOperations.jl",
+        edit_link="main",
         assets=String[],
     ),
-    pages=[
-        "Home" => "index.md",
-    ],
+    pages=["Home" => "index.md"],
 )
 
-deploydocs(;
-    repo="github.com/lucasvalenzuela/FastUnitfulOperations.jl",
-    devbranch="main",
-)
+deploydocs(; repo="github.com/lucasvalenzuela/FastUnitfulOperations.jl", devbranch="main")

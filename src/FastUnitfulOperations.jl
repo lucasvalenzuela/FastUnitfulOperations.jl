@@ -45,22 +45,38 @@ optimized matrix multiplication for integers or floats.
 The method will throw an error if the array contains Unitful elements that do not have a fixed
 value or unit type.
 """
-function uproduct!(c::AbstractArray{T1}, a::AbstractArray{T2}, b::AbstractArray{T3}) where {T1<:Quantity,T2<:Quantity,T3<:Quantity}
+function uproduct!(
+    c::AbstractArray{T1},
+    a::AbstractArray{T2},
+    b::AbstractArray{T3},
+) where {T1<:Quantity,T2<:Quantity,T3<:Quantity}
     mul!(ustrip(c), ustrip(a), ustrip(b))
     return c
 end
 
-function uproduct!(c::AbstractArray, a::AbstractArray{T2}, b::AbstractArray{T3}) where {T2<:Quantity,T3<:Quantity}
+function uproduct!(
+    c::AbstractArray,
+    a::AbstractArray{T2},
+    b::AbstractArray{T3},
+) where {T2<:Quantity,T3<:Quantity}
     mul!(c, ustrip(a), ustrip(b))
     return c
 end
 
-function uproduct!(c::AbstractArray{T1}, a::AbstractArray, b::AbstractArray{T3}) where {T1<:Quantity,T3<:Quantity}
+function uproduct!(
+    c::AbstractArray{T1},
+    a::AbstractArray,
+    b::AbstractArray{T3},
+) where {T1<:Quantity,T3<:Quantity}
     mul!(ustrip(c), a, ustrip(b))
     return c
 end
 
-function uproduct!(c::AbstractArray{T1}, a::AbstractArray{T2}, b::AbstractArray) where {T1<:Quantity,T2<:Quantity}
+function uproduct!(
+    c::AbstractArray{T1},
+    a::AbstractArray{T2},
+    b::AbstractArray,
+) where {T1<:Quantity,T2<:Quantity}
     mul!(ustrip(c), ustrip(a), b)
     return c
 end
