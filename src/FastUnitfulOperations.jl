@@ -224,8 +224,7 @@ _fastsortable(a, kwargs) =
 """
     usort(a; kwargs...)
 
-Return a sorted copy of the unitful array `a`, like
-[`sort`](https://docs.julialang.org/en/v1/base/sort/#Base.sort).
+Return a sorted copy of the unitful array `a`, like [`sort`](@extref Base.sort).
 
 The elements are sorted by their numeric values, which is faster than sorting the quantities and
 allows sorting algorithms that only accept integers or floats (e.g., RadixSort from
@@ -257,9 +256,8 @@ usort(a; kwargs...) = sort(a; kwargs...)
 """
     usort!(a; kwargs...)
 
-Sort the unitful array `a` in place and return it, like
-[`sort!`](https://docs.julialang.org/en/v1/base/sort/#Base.sort!). This is the in-place version
-of [`usort`](@ref), with the same fallbacks.
+Sort the unitful array `a` in place and return it, like [`sort!`](@extref Base.sort!).
+This is the in-place version of [`usort`](@ref), with the same fallbacks.
 """
 function usort!(a::AbstractArray{<:Quantity}; kwargs...)
     _fastsortable(a, kwargs) || return sort!(a; kwargs...)
@@ -272,9 +270,9 @@ usort!(a; kwargs...) = sort!(a; kwargs...)
 """
     usortperm(a; kwargs...)
 
-Return the permutation that sorts the unitful array `a`, like
-[`sortperm`](https://docs.julialang.org/en/v1/base/sort/#Base.sortperm). The permutation is
-computed from the numeric values as in [`usort`](@ref), with the same fallbacks.
+Return the permutation that sorts the unitful array `a`, like [`sortperm`](@extref Base.sortperm).
+The permutation is computed from the numeric values as in [`usort`](@ref), with the same
+fallbacks.
 
 # Examples
 
@@ -299,8 +297,8 @@ usortperm(a; kwargs...) = sortperm(a; kwargs...)
     usortperm!(ix, a; kwargs...)
 
 Store the permutation that sorts the unitful array `a` in `ix` and return `ix`, like
-[`sortperm!`](https://docs.julialang.org/en/v1/base/sort/#Base.sortperm!). This is the in-place
-version of [`usortperm`](@ref), with the same fallbacks.
+[`sortperm!`](@extref Base.Sort.sortperm!). This is the in-place version of
+[`usortperm`](@ref), with the same fallbacks.
 """
 function usortperm!(ix, a::AbstractArray{<:Quantity}; kwargs...)
     _fastsortable(a, kwargs) || return sortperm!(ix, a; kwargs...)
