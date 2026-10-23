@@ -180,7 +180,7 @@ Fast in-place matrix multiplication for Unitful arrays, storing `a * b` in `c` a
 This method multiplies the numeric values with the routines for plain numbers (e.g., BLAS) and
 stores them in `c`. It throws an error if the unit of `c` differs from the product of the units
 of `a` and `b` (a unitless `c` requires `a * b` to be unitless).
-The method falls back to `mul!(c, a, b)`, which converts units as needed, if an argument is not a
+The method falls back to `mul!(c, a, b)`,  if an argument is not a
 [supported array](@ref "Supported arrays").
 
 # Examples
