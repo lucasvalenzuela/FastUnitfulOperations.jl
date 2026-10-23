@@ -1,6 +1,6 @@
 name = "FastUnitfulOperations"
 uuid = "b031420d-871e-4e9c-8878-33bec386257e"
-version = "0.1.2"
+version = "0.2.0"
 authors = ["Lucas Valenzuela"]
 
 [workspace]
@@ -10,7 +10,14 @@ projects = ["docs", "test"]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
+[weakdeps]
+StaticArraysCore = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
+
+[extensions]
+FastUnitfulOperationsStaticArraysCoreExt = "StaticArraysCore"
+
 [compat]
 LinearAlgebra = "1"
+StaticArraysCore = "1.4"
 Unitful = "1.29"
 julia = "1.12"
