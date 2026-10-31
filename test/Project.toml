@@ -17,7 +17,7 @@ FastUnitfulOperations = {path = ".."}
 [compat]
 Aqua = "0.8.14"
 ExplicitImports = "1.15"
-JET = "0.12"
+JET = "0.12, 0.13"
 OffsetArrays = "1.12"
 Rotations = "1.7"
 SortingAlgorithms = "1.2"
