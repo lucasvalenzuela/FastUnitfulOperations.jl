@@ -321,6 +321,16 @@ using Unitful
                 @test ix == sortperm(x; kw...)
             end
 
+            # Types with at most 32 bits use 64-bit keys for vectors with 2^32 or more elements
+            for x in (rand(Float32, n), rand(Int8, n), rand(UInt32, n), Float32.(rand(special, n)))
+                ix = Vector{Int}(undef, length(x))
+                @test isequal(FastUnitfulOperations._packedsortperm!(ix, x, false, UInt64), sortperm(x))
+                @test isequal(
+                    FastUnitfulOperations._packedsortperm!(ix, x, true, UInt64),
+                    sortperm(x; rev=true),
+                )
+            end
+
             # Other keyword arguments use `sortperm`
             x = rand(n)
             @test usortperm(x; by=abs) == sortperm(x; by=abs)
