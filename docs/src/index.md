@@ -80,6 +80,21 @@ julia> @elapsed usort(x)
 0.0179
 ```
 
+[`usortperm`](@ref) is also faster for large vectors of plain integers or floats: `sortperm`
+compares the values of the indices it sorts, and for vectors larger than the CPU cache, nearly
+every comparison reads from main memory. `usortperm` instead sorts the values packed together
+with their indices, which reads memory sequentially and gives the same permutation.
+
+```jldoctest performance; filter = r"\d+\.\d+(e-\d+)?"
+julia> y = rand(10^7); sortperm(y); usortperm(y);
+
+julia> @elapsed sortperm(y)
+1.64
+
+julia> @elapsed usortperm(y)
+0.63
+```
+
 ## Reference
 
 ```@autodocs

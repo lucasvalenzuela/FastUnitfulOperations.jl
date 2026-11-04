@@ -292,6 +292,53 @@ using Unitful
             end
         end
 
+        @testset "Packed sortperm" begin
+            # Vectors of integers or floats from 1024 elements on sort values packed with their
+            # indices, which must give the same permutation as `sortperm`.
+            n = 5000
+            special = [NaN, -NaN, 0.0, -0.0, Inf, -Inf, 1.0, -1.0, prevfloat(Inf), nextfloat(-Inf)]
+            for x in (
+                    rand(n),
+                    rand(Float32, n),
+                    sortperm(rand(n)),
+                    rand(Int8, n),
+                    rand(Int32, n),
+                    rand(UInt64, n),
+                    rand(UInt8, n),
+                    collect(typemin(Int):(typemax(Int) ÷ n * 2):typemax(Int)),
+                    rand(-3:3, n) * 1.0,
+                    rand(special, n),
+                    Float32.(rand(special, n)),
+                    rand(n) * u"m",
+                    view(rand(2n), 1:2:(2n)),
+                    view(rand(2n), n:-1:1),
+                ),
+                kw in ((;), (; rev=true), (; rev=false), (; rev=nothing))
+
+                @test isequal(usortperm(x; kw...), sortperm(x; kw...))
+                ix = Vector{Int}(undef, length(x))
+                @test usortperm!(ix, x; kw...) === ix
+                @test ix == sortperm(x; kw...)
+            end
+
+            # Types with at most 32 bits use 64-bit keys for vectors with 2^32 or more elements
+            for x in (rand(Float32, n), rand(Int8, n), rand(UInt32, n), Float32.(rand(special, n)))
+                ix = Vector{Int}(undef, length(x))
+                @test isequal(FastUnitfulOperations._packedsortperm!(ix, x, false, UInt64), sortperm(x))
+                @test isequal(
+                    FastUnitfulOperations._packedsortperm!(ix, x, true, UInt64),
+                    sortperm(x; rev=true),
+                )
+            end
+
+            # Other keyword arguments use `sortperm`
+            x = rand(n)
+            @test usortperm(x; by=abs) == sortperm(x; by=abs)
+            @test usortperm(x; alg=QuickSort) == sortperm(x)
+            ix = collect(n:-1:1)
+            @test usortperm!(ix, x; initialized=true) == sortperm!(collect(n:-1:1), x; initialized=true)
+        end
+
         @testset "Fallbacks" begin
             # Unsupported array types: ranges and OffsetArrays
             for x in ((5:-1:1) * u"m", OffsetArray(au[1:20], -10:9))
